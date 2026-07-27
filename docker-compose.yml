@@ -1,0 +1,20 @@
+# Docker Compose = a recipe that starts services (like a database) with one command.
+# Think of Docker as a shipping container for software: same setup on every computer.
+
+services:
+  db:
+    image: postgres:16
+    container_name: creditpilot-db
+    environment:
+      POSTGRES_USER: creditpilot
+      POSTGRES_PASSWORD: creditpilot
+      POSTGRES_DB: creditpilot
+    ports:
+      # Your Mac talks to the DB at localhost:5432
+      - "5432:5432"
+    volumes:
+      # Save database files so data survives restarts
+      - creditpilot_pgdata:/var/lib/postgresql/data
+
+volumes:
+  creditpilot_pgdata:
