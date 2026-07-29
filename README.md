@@ -126,6 +126,16 @@ Open the interactive docs:
 
 ---
 
-## Next (Week 2)
+## Week 2 — Frontend (started)
 
-Build the React dashboard so you can see cards in a real UI instead of only `/docs`.
+The React app lives in `frontend/`.
+
+```bash
+# Terminal 1
+cd backend && source .venv/bin/activate && uvicorn app.main:app --reload
+
+# Terminal 2
+cd frontend && npm run dev
+```
+
+Open http://127.0.0.1:5173 — signup, login, add cards, see utilization.

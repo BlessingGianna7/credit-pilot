@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/*
+  CSS variables = named colors/fonts for the whole app.
+  Change them here and the UI updates everywhere.
+*/
+:root {
+  --ink: #122018;
+  --muted: #5b6b62;
+  --paper: #f3f6f4;
+  --panel: #ffffff;
+  --line: #d7e0da;
+  --accent: #1f7a5c;
+  --accent-dark: #155a43;
+  --warn: #b45309;
+  --danger: #b42318;
+  --good: #1f7a5c;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at top left, rgba(31, 122, 92, 0.12), transparent 40%),
+    linear-gradient(180deg, #eef3f0 0%, var(--paper) 45%, #e8efe9 100%);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--accent-dark);
+}
