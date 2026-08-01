@@ -13,25 +13,48 @@ This frontend is the dining room.
 | **TypeScript** | JavaScript + types (catches mistakes earlier) |
 | **Vite** | Fast tool to run/build the React app |
 | **Tailwind CSS** | Utility classes for styling (`className="mt-4"`) |
-| **React Router** | Changes pages based on the URL (`/login`, `/`) |
+| **React Router** | Changes pages based on the URL |
+| **Recharts** | Charts for utilization |
 
 ## Folder map
 
 ```
 frontend/src/
-├── api/           ← talks to FastAPI (fetch wrappers)
-├── auth/          ← login state (JWT token)
-├── components/    ← reusable UI pieces
-├── pages/         ← full screens (Login, Register, Dashboard)
-├── types.ts       ← shared TypeScript shapes
-├── App.tsx        ← route map
-├── main.tsx       ← app entry point
-└── index.css      ← global styles + Tailwind
+├── api/              ← talks to FastAPI (fetch wrappers)
+├── auth/             ← login state (JWT token)
+├── components/       ← reusable UI (nav layout, bars, badges)
+├── hooks/            ← reusable data logic (load cards + metrics)
+├── lib/              ← tiny helpers (money formatting)
+├── pages/            ← full screens
+│   ├── LoginPage.tsx
+│   ├── RegisterPage.tsx
+│   ├── DashboardPage.tsx
+│   ├── UtilizationPage.tsx
+│   ├── SimulatorPage.tsx
+│   ├── TipsPage.tsx
+│   ├── AddCardPage.tsx
+│   └── CardDetailPage.tsx
+├── types.ts          ← shared TypeScript shapes
+├── App.tsx           ← route map
+├── main.tsx          ← app entry point
+└── index.css         ← global styles + Tailwind
 ```
+
+## Screens
+
+| URL | What it does |
+|-----|----------------|
+| `/login`, `/register` | Auth |
+| `/` | Dashboard overview |
+| `/utilization` | Tracker + chart |
+| `/simulator` | “What if I pay $X?” |
+| `/tips` | Rule-based coach tips |
+| `/cards/new` | Add a card |
+| `/cards/:id` | Edit / delete a card |
 
 ## Run it
 
-**Terminal 1 — backend** (must be running first):
+**Terminal 1 — backend:**
 
 ```bash
 cd backend
@@ -47,10 +70,3 @@ npm run dev
 ```
 
 Open http://127.0.0.1:5173
-
-## Flow to try
-
-1. Create an account at `/register`
-2. Land on the dashboard
-3. Add Chase Freedom Rise ($500 limit, $120 balance)
-4. See ~24% utilization and the paydown tip

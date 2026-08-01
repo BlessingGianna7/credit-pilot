@@ -65,3 +65,35 @@ def analyze_card(
     status = utilization_status(util)
     paydown = amount_to_reach_target(balance, credit_limit, target=0.10)
     return util, util * 100, status, paydown
+
+
+def simulate_payment(
+    balance: Decimal,
+    credit_limit: Decimal,
+    payment: Decimal,
+) -> Tuple[Decimal, float, float, str, Decimal, float, float, str]:
+    """
+    What happens if the user pays `payment`?
+
+    Returns before/after balances, utilization, and status.
+    Payment cannot exceed current balance (no negative balance in MVP).
+    """
+    if payment < 0:
+        raise ValueError("payment cannot be negative")
+
+    applied = min(payment, balance)
+    after_balance = (balance - applied).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+    before_util, before_pct, before_status, _ = analyze_card(balance, credit_limit)
+    after_util, after_pct, after_status, _ = analyze_card(after_balance, credit_limit)
+
+    return (
+        balance,
+        before_util,
+        before_pct,
+        before_status,
+        after_balance,
+        after_util,
+        after_pct,
+        after_status,
+    )

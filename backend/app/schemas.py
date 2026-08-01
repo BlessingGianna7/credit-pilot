@@ -86,3 +86,20 @@ class CreditCardMetrics(BaseModel):
     utilization_percent: float
     status: str
     amount_to_pay_for_10_percent: Decimal
+
+
+class SimulatePaymentRequest(BaseModel):
+    payment: Decimal = Field(ge=0, decimal_places=2)
+
+
+class SimulatePaymentResult(BaseModel):
+    card_id: int
+    card_name: str
+    payment: Decimal
+    before_balance: Decimal
+    before_utilization_percent: float
+    before_status: str
+    after_balance: Decimal
+    after_utilization_percent: float
+    after_status: str
+    explanation: str

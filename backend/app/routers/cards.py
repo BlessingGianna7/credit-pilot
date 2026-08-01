@@ -16,8 +16,10 @@ from app.schemas import (
     CreditCardMetrics,
     CreditCardOut,
     CreditCardUpdate,
+    SimulatePaymentRequest,
+    SimulatePaymentResult,
 )
-from app.services.utilization import analyze_card
+from app.services.utilization import analyze_card, simulate_payment
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
@@ -144,4 +146,53 @@ def card_metrics(
         utilization_percent=util_pct,
         status=status_label,
         amount_to_pay_for_10_percent=paydown,
+    )
+
+
+@router.post("/{card_id}/simulate", response_model=SimulatePaymentResult)
+def simulate_card_payment(
+    card_id: int,
+    body: SimulatePaymentRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> SimulatePaymentResult:
+    """Estimate utilization before/after a payment (does not change saved balance)."""
+    card = _get_owned_card(db, card_id, current_user)
+
+    (
+        before_balance,
+        _before_util,
+        before_pct,
+        before_status,
+        after_balance,
+        _after_util,
+        after_pct,
+        after_status,
+    ) = simulate_payment(card.balance, card.credit_limit, body.payment)
+
+    if after_pct < before_pct:
+        explanation = (
+            f"Paying ${body.payment} would lower utilization from "
+            f"{before_pct:.1f}% to {after_pct:.1f}%. Lower utilization is generally "
+            "viewed more favorably on credit profiles."
+        )
+    elif after_pct == before_pct:
+        explanation = (
+            "This payment would not change utilization "
+            "(payment may be $0 or already at $0 balance)."
+        )
+    else:
+        explanation = "Unexpected result: utilization increased."
+
+    return SimulatePaymentResult(
+        card_id=card.id,
+        card_name=card.card_name,
+        payment=body.payment,
+        before_balance=before_balance,
+        before_utilization_percent=before_pct,
+        before_status=before_status,
+        after_balance=after_balance,
+        after_utilization_percent=after_pct,
+        after_status=after_status,
+        explanation=explanation,
     )

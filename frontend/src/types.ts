@@ -43,3 +43,18 @@ export type CreditCardCreate = {
   statement_day: number
   due_day: number
 }
+
+export type CreditCardUpdate = Partial<CreditCardCreate>
+
+export type SimulatePaymentResult = {
+  card_id: number
+  card_name: string
+  payment: string
+  before_balance: string
+  before_utilization_percent: number
+  before_status: string
+  after_balance: string
+  after_utilization_percent: number
+  after_status: string
+  explanation: string
+}
