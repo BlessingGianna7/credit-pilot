@@ -7,6 +7,7 @@ import { CardDetailPage } from './pages/CardDetailPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
+import { RemindersPage } from './pages/RemindersPage'
 import { SimulatorPage } from './pages/SimulatorPage'
 import { TipsPage } from './pages/TipsPage'
 import { UtilizationPage } from './pages/UtilizationPage'
@@ -36,6 +37,7 @@ function App() {
             <Route path="/utilization" element={<UtilizationPage />} />
             <Route path="/simulator" element={<SimulatorPage />} />
             <Route path="/tips" element={<TipsPage />} />
+            <Route path="/reminders" element={<RemindersPage />} />
             <Route path="/cards/new" element={<AddCardPage />} />
             <Route path="/cards/:cardId" element={<CardDetailPage />} />
           </Route>

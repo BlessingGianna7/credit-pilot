@@ -15,7 +15,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
-from app.routers import auth, cards
+from app.routers import auth, cards, insights
 
 # Create database tables if they don't exist yet.
 # (Later we may switch to Alembic migrations — a more professional approach.)
@@ -44,7 +44,7 @@ app.add_middleware(
 # Plug in our route groups
 app.include_router(auth.router)
 app.include_router(cards.router)
-
+app.include_router(insights.router)
 
 @app.get("/health")
 def health_check() -> dict[str, str]:

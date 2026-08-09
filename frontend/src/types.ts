@@ -58,3 +58,21 @@ export type SimulatePaymentResult = {
   after_status: string
   explanation: string
 }
+
+export type Insight = {
+  kind: string
+  code: string
+  severity: 'high' | 'medium' | 'low' | 'info' | string
+  title: string
+  message: string
+  card_id?: number | null
+  card_name?: string | null
+  days_until_statement?: number | null
+  days_until_due?: number | null
+  amount_to_pay?: string | null
+  action_path?: string | null
+}
+
+export type InsightsResponse = {
+  items: Insight[]
+}

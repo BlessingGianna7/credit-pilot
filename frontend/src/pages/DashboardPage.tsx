@@ -63,6 +63,12 @@ export function DashboardPage() {
         >
           See tips
         </Link>
+        <Link
+          to="/reminders"
+          className="rounded-xl border border-[var(--line)] bg-white px-4 py-2 text-sm font-semibold text-[var(--ink)] no-underline hover:bg-[var(--paper)]"
+        >
+          Payment reminders
+        </Link>
       </section>
 
       <section>

@@ -103,3 +103,23 @@ class SimulatePaymentResult(BaseModel):
     after_utilization_percent: float
     after_status: str
     explanation: str
+
+
+# ---------- Insights (recommendations + reminders) ----------
+
+class InsightOut(BaseModel):
+    kind: str
+    code: str
+    severity: str
+    title: str
+    message: str
+    card_id: Optional[int] = None
+    card_name: Optional[str] = None
+    days_until_statement: Optional[int] = None
+    days_until_due: Optional[int] = None
+    amount_to_pay: Optional[Decimal] = None
+    action_path: Optional[str] = None
+
+
+class InsightsResponse(BaseModel):
+    items: list[InsightOut]
